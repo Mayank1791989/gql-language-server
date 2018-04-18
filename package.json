@@ -1,0 +1,67 @@
+{
+  "name": "@playlyfe/gql-language-server",
+  "version": "0.0.0-development",
+  "description": "gql service and tools",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mayank1791989/gql-language-server.git"
+  },
+  "scripts": {
+    "test": "yarn run lint",
+    "check-code": "yarn run lint",
+    "flow-check": "flow check",
+    "lint": "eslint src",
+    "flow-typed-update": "flow-typed update && babel-node ./scripts/fix-flow-typed",
+    "build": "yarn run clean && babel ./src --out-dir ./lib --ignore '**/__**__/**,**/node_modules/**'",
+    "clean": "rm -rf lib",
+    "commit": "git-cz",
+    "precommit": "yarn run test"
+  },
+  "bin": {
+    "gql-language-server": "./lib/bin/cli.js"
+  },
+  "author": "Mayank Agarwal <mayank1791989@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "dependencies": {
+    "babel-runtime": "6.26.0",
+    "event-kit": "2.5.0",
+    "find-config": "1.0.0",
+    "fs-extra": "7.0.0",
+    "import-from": "2.1.0",
+    "invariant": "2.2.4",
+    "log4js": "3.0.2",
+    "semver": "5.5.0",
+    "simple-text-buffer": "9.2.11",
+    "vscode-jsonrpc": "3.6.2",
+    "vscode-languageserver": "4.4.0",
+    "vscode-languageserver-protocol": "3.10.0",
+    "vscode-languageserver-types": "3.10.0",
+    "vscode-uri": "1.0.5",
+    "yargs": "12.0.1",
+    "yarn": "1.9.2"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-playlyfe": "2.0.4",
+    "commitizen": "2.10.1",
+    "cross-env": "5.2.0",
+    "cz-conventional-changelog": "2.1.0",
+    "eslint": "5.2.0",
+    "eslint-plugin-playlyfe": "5.0.1",
+    "flow-bin": "0.77.0",
+    "flow-typed": "2.5.1",
+    "husky": "0.14.3",
+    "prettier": "1.13.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

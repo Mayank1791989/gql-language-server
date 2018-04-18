@@ -1,0 +1,15 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[options]
+suppress_type=$FlowIssue
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
+suppress_comment=\\(.\\|\n\\)*\\$FlowDisableNextLine
+
+module.system.node.resolve_dirname=node_modules
+
+[version]
+0.77.0

@@ -1,0 +1,26 @@
+{
+  "search.exclude": {
+    "**/node_modules": true,
+    "lib/**": true,
+    "coverage/**": true
+  },
+
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false,
+    "**/.DS_Store": false,
+    "lib/**": false,
+    "coverage/**": false
+  },
+
+  "editor.formatOnSave": true,
+
+  "flow.useLSP": true,
+  "flow.enabled": true,
+  "flow.useNPMPackagedFlow": true,
+  "flow.showStatus": true,
+
+  "javascript.validate.enable": false
+}
