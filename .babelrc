@@ -1,0 +1,13 @@
+{
+  presets: [
+    [
+      'playlyfe', {
+        react: false,
+        asyncAwait: true,
+        targets: {
+          "node": "6.10",
+        },
+      }
+    ],
+  ],
+}
