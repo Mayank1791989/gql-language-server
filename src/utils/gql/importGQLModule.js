@@ -1,5 +1,6 @@
 /* @flow */
 import importFrom from 'import-from';
+import semver from 'semver';
 import PackageDownloader from './PackageDownloader';
 import { getGQLConfig } from './gqlConfig';
 import { type ILogger } from './types';
@@ -37,10 +38,10 @@ export default async function importGQLModule({
       const gqlConfig = getGQLConfig(configDir);
       const { version } = gqlConfig;
 
-      if (!version) {
+      if (!version || !semver.valid(version)) {
         logger.error(
-          `No valid version of ${GQL_MODULE_NAME} found in .gqlconfig` +
-            ` (Please specify a valid package version in .gqlconfig to auto download package.)`,
+          `No valid version of ${GQL_MODULE_NAME} found in .gqlconfig. ` +
+            `Please specify a valid package version in .gqlconfig to auto download package.`,
         );
         throw err;
       }

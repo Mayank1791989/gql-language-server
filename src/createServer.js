@@ -60,7 +60,9 @@ export default function createServer(
       autoDownloadGQL: options.autoDownloadGQL,
       debug: options.loglevel === 'debug',
     });
-    const onErrorSubscription = gqlService.onError(err => logger.error(err));
+    const onErrorSubscription = gqlService.onError(err =>
+      logger.error(err.message),
+    );
     const onLogSubscription = gqlService.onLog(({ level, name, args }) => {
       gqlLogger.category = name;
       gqlLogger[level](...args);
