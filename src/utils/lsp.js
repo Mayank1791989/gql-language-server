@@ -18,6 +18,7 @@ export type {
   ICompletionList,
   ICompletionItem,
   ITextDocumentItem,
+  CompletionItemKindType,
   DiagnosticSeverityType,
   IHover,
 } from 'vscode-languageserver-types';

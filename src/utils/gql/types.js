@@ -38,6 +38,7 @@ export type GQLError = {
 export type GQLHint = {
   text: string,
   type?: string,
+  kind?: string,
   description?: ?string,
 };
 export type GQLInfo = {

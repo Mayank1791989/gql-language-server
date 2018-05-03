@@ -1,9 +1,10 @@
 /* @flow */
 import { type IGQLService } from '../utils/gql/types';
 import {
+  CompletionItemKind,
   type ICompletionList,
   type TextDocumentPositionParams,
-  CompletionItemKind,
+  type CompletionItemKindType,
 } from '../utils/lsp';
 
 import TextDocuments from '../utils/TextDocuments';
@@ -13,6 +14,40 @@ type CompletionParams = {
   documents: TextDocuments,
   gqlService: IGQLService,
 };
+
+const COMPLETION_ITEM_KIND_LOOKUP: {
+  [string]: CompletionItemKindType,
+} = {
+  // query
+  Document: CompletionItemKind.File,
+  SelectionSet: CompletionItemKind.Field,
+  Field: CompletionItemKind.Field,
+  AliasedField: CompletionItemKind.Field,
+  Arguments: CompletionItemKind.Variable,
+  Argument: CompletionItemKind.Variable,
+  ObjectValue: CompletionItemKind.Property,
+  ObjectField: CompletionItemKind.Property,
+  EnumValue: CompletionItemKind.Enum,
+  ListValue: CompletionItemKind.Enum,
+  TypeCondition: CompletionItemKind.Keyword,
+  FragmentSpread: CompletionItemKind.Interface,
+  ListType: CompletionItemKind.Variable,
+  Directive: CompletionItemKind.Method,
+  // schema
+  UnionDef: CompletionItemKind.Class,
+  FieldDef: CompletionItemKind.Field,
+  ObjectTypeDef: CompletionItemKind.Keyword,
+  Implements: CompletionItemKind.Interface,
+  InputValueDef: CompletionItemKind.Value,
+};
+
+function getCompletionItemKind(kind?: string): CompletionItemKindType {
+  // eslint-disable-next-line no-undefined
+  if (kind !== undefined && COMPLETION_ITEM_KIND_LOOKUP[kind] !== undefined) {
+    return COMPLETION_ITEM_KIND_LOOKUP[kind];
+  }
+  return CompletionItemKind.Text;
+}
 
 export default class Completion {
   documents: TextDocuments;
@@ -32,10 +67,10 @@ export default class Completion {
 
     return {
       isIncomplete: false,
-      items: items.map(({ text, type, description }) => ({
+      items: items.map(({ text, type, kind, description }) => ({
         label: text,
         detail: type || '',
-        kind: CompletionItemKind.Interface,
+        kind: getCompletionItemKind(kind),
         documentation: description || '',
       })),
     };
