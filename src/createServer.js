@@ -22,6 +22,12 @@ import {
   DefinitionRequest,
   ReferencesRequest,
 } from './utils/lsp';
+import {
+  CodeLensRequest,
+  ExecuteCommandRequest,
+  ShowMessageRequest,
+} from 'vscode-languageserver-protocol';
+import { uriToFilePath } from './utils/helpers';
 
 const logger = getLogger('gql-language-server');
 const gqlLogger = getLogger(); // logger name will be set while logging
@@ -113,6 +119,12 @@ export default function createServer(
         textDocumentSync: documents.syncKind,
         definitionProvider: true,
         hoverProvider: true,
+        executeCommandProvider: {
+          commands: ['goToResolver', 'goToSchema'],
+        },
+        codeLensProvider: {
+          resolveProvider: true,
+        },
         referencesProvider: true,
         completionProvider: {
           resolveProvider: false,
@@ -132,6 +144,72 @@ export default function createServer(
 }
 
 function setupProviders(connection, gqlService, documents) {
+  // Code Lens
+  connection.onCodeLens(({ textDocument: { uri } }) => {
+    return gqlService.getLenses({
+      sourcePath: uriToFilePath(uri),
+    });
+  });
+
+  // Code Lens Resolve
+  connection.onCodeLensResolve(
+    ({ range, data: { typeName, fieldName, path, type } }) => {
+      return {
+        range,
+        command: {
+          title: type === 'schema' ? 'Go To Resolver' : 'Go To Schema',
+          command: type === 'schema' ? 'goToResolver' : 'goToSchema',
+          arguments: [typeName, fieldName, path],
+        },
+      };
+    },
+  );
+
+  // Execute Command
+  connection.onExecuteCommand(async ({ command, arguments: args }) => {
+    const [fieldType, fieldName] = args;
+    if (command === 'goToResolver') {
+      const resolverLocation = await gqlService.getResolverLocation({
+        fieldType,
+        fieldName,
+      });
+      console.log(JSON.stringify(resolverLocation));
+      connection.sendRequest(ShowMessageRequest.type.method, {
+        type: 2,
+        message: `${fieldType} - ${fieldName} - ${resolverLocation.path}`,
+      });
+      /*
+      connection.workspace
+        .applyEdit({
+          documentChanges: [
+            {
+              kind: 'create',
+              uri: `file://${resolverLocation.path}`,
+              options: {
+                ignoreIfExists: false,
+              },
+            },
+          ],
+        })
+        .then((res, err) => {
+          console.log(JSON.stringify(res));
+          console.log(err);
+        });
+      */
+    } else if (command === 'goToSchema') {
+      const schemaLocation = await gqlService.getSchemaLocation({
+        fieldType,
+        fieldName,
+      });
+      console.log(JSON.stringify(schemaLocation));
+      connection.sendRequest(ShowMessageRequest.type.method, {
+        type: 2,
+        message: `${fieldType} - ${fieldName} - ${schemaLocation.path}`,
+      });
+    }
+    return null;
+  });
+
   // diagnostics
   const diagnostics = new Diagnostics({ gqlService });
   diagnostics.listen(diagnosticItems => {
@@ -181,6 +259,11 @@ function registerCapabilitiesDynamically(params: {
   const extensions = params.gqlService.getConfig().getFileExtensions();
   const documentOptions = {
     documentSelector: [
+      { scheme: 'file', pattern: `**/*.{${extensions.join(',')},ts,js}` },
+    ],
+  };
+  const documentOptionsGql = {
+    documentSelector: [
       { scheme: 'file', pattern: `**/*.{${extensions.join(',')}}` },
     ],
   };
@@ -196,10 +279,19 @@ function registerCapabilitiesDynamically(params: {
   });
   registration.add(DidCloseTextDocumentNotification.type, documentOptions);
 
-  registration.add(CompletionRequest.type, documentOptions);
-  registration.add(HoverRequest.type, documentOptions);
+  registration.add(CompletionRequest.type, documentOptionsGql);
+  registration.add(HoverRequest.type, documentOptionsGql);
   registration.add(DefinitionRequest.type, documentOptions);
-  registration.add(ReferencesRequest.type, documentOptions);
+  registration.add(ReferencesRequest.type, documentOptionsGql);
+
+  registration.add(CodeLensRequest.type, {
+    ...documentOptions,
+    resolveProvider: true,
+  });
+
+  registration.add(ExecuteCommandRequest.type, {
+    commands: ['goToResolver', 'goToSchema'],
+  });
 
   params.connection.client.register(registration);
 }

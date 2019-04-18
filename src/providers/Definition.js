@@ -22,8 +22,10 @@ export default class Definition {
     this.gqlService = gqlService;
   }
 
-  provideDefinition(params: TextDocumentPositionParams): null | ILocation {
-    const defLocation = this.gqlService.getDef({
+  async provideDefinition(
+    params: TextDocumentPositionParams,
+  ): null | ILocation {
+    const defLocation = await this.gqlService.getDef({
       sourceText: this.documents.get(params.textDocument.uri).getText(),
       sourcePath: uriToFilePath(params.textDocument.uri),
       position: lspPositionToGQLPosition(params.position),

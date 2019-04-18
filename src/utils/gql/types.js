@@ -51,6 +51,11 @@ export type IGQLServiceCommandParams = {
   position: GQLPosition,
 };
 
+export type IGQLServiceGetResolverOrSchemaParams = {
+  fieldType: string,
+  fieldName: string,
+};
+
 export interface IGQLService {
   start(): Promise<void>;
   stop(): Promise<void>;
@@ -64,6 +69,9 @@ export interface IGQLService {
   status(): Array<GQLError>;
   autocomplete(params: IGQLServiceCommandParams): Array<GQLHint>;
   getDef(params: IGQLServiceCommandParams): ?GQLLocation;
+  getLenses(params: IGQLServiceCommandParams): any;
+  getResolverLocation(params: IGQLServiceGetResolverOrSchemaParams): any;
+  getSchemaLocation(params: IGQLServiceGetResolverOrSchemaParams): any;
   findRefs(params: IGQLServiceCommandParams): Array<GQLLocation>;
   getInfo(params: IGQLServiceCommandParams): ?GQLInfo;
 }
