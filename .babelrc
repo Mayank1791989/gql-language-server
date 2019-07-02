@@ -1,0 +1,12 @@
+{
+  presets: [
+    [
+      'playlyfe', {
+        react: false,
+        targets: {
+          "node": "8",
+        },
+      }
+    ],
+  ],
+}

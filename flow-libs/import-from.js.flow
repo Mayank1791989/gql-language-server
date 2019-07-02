@@ -1,0 +1,8 @@
+/* @flow */
+
+declare module 'import-from' {
+  declare export default function importFrom<TModule>(
+    path: string,
+    module: string,
+  ): TModule;
+}

@@ -1,0 +1,18 @@
+/* @flow */
+declare module 'log4js' {
+  declare type Level = 'info' | 'warn' | 'error' | 'debug';
+  declare type Logger = {
+    category: string,
+    +[level: Level]: (...args: Array<mixed>) => void,
+    info(...args: Array<mixed>): void,
+    warn(...args: Array<mixed>): void,
+    error(...args: Array<mixed>): void,
+    debug(...args: Array<mixed>): void,
+    isDebugEnabled(): boolean,
+  };
+  declare export function getLogger(name?: string): Logger;
+  declare export default {
+    configure(options: $FixMe): void,
+    getLogger: typeof getLogger,
+  };
+}

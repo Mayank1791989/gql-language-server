@@ -1,0 +1,26 @@
+/* @flow */
+
+declare module 'event-kit' {
+  declare export class Disposable {
+    constructor(disposeAction: () => void): this;
+    dispose(): void;
+  }
+
+  declare export class CompositeDisposable {
+    add(disposable: Disposable): void;
+    dispose(): void;
+    remove(disposable: Disposable): void;
+    delete(disposable: Disposable): void;
+    clear(): void;
+  }
+
+  declare export class Emitter {
+    on(eventName: string, handler: $FixMe, unshift: $FixMe): Disposable;
+    once(eventName: string, handler: $FixMe, unshift: $FixMe): Disposable;
+    off(eventName: string, handlerToRemove: $FixMe): void;
+    emit(eventName: string, value: $FixMe): void;
+    getTotalListenerCount(): number;
+    listerCountForEventName(eventName: string): number;
+    getEventNames(): Array<string>;
+  }
+}

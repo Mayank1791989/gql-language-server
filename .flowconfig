@@ -1,0 +1,26 @@
+[ignore]
+
+[include]
+
+[libs]
+flow-libs
+
+[options]
+suppress_type=$FlowIssue
+suppress_type=$FixMe
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
+suppress_comment=\\(.\\|\n\\)*\\$FlowDisableNextLine
+
+[strict]
+nonstrict-import
+unclear-type
+unsafe-getters-setters
+untyped-import
+untyped-type-import
+sketchy-null-number
+sketchy-null-bool
+sketchy-null-mixed
+# leaving sketchy-null-string for now
+
+[version]
+0.102.0

@@ -1,0 +1,25 @@
+language: node_js
+
+node_js:
+  - 8
+  - 10
+
+script:
+  - yarn test
+
+jobs:
+  include:
+    # Define the release stage that publish to npm
+    - stage: npm publish
+      node_js: 8
+      script:
+        yarn build
+      deploy:
+        provider: npm
+        email: mayank1791989@gmail.com
+        api_key:
+          secure: lh4SoJhvlohnlCewCtNUBzwMP22vGgIZ0fUXsB3uOeK7WxHgxUDybHaSeDgQiU7B6+vuSlcJAitj/p/5vhBs5HMhFTetlWGoa/rJ+XLr7+taq69kbrrSaAM4HUIwCswJPaj+2OYgGRAsQs1MpTjZEN/7HDLHyO1kL2YFogUxG73CveVrGes292IIiqF7qYvS/VWqokG/dYWdCSBlveDzlFOT4RJ7l7KkoLJfY73QjprGVs2y1aNgyUr1akrJhV64VfeW+6iBvFP7kXXKpVB0IpwW4tYmgCy3VfxteSwT/M2qBiNL7u0Le8c7rZ6VgjVCSy67aGSj43HsvZSI+eElvbOhJ2jlBAfcad5jmja+dG8vaTwbk/RVoE+eWUClkiwVXseExx4cDP8VIS9X2tOvVgU5iM2TQfq8awWfekClGdIzbcMGfLwpfQjWm9Xg370jgahXaLa6xLHvEBh2+fruLnZa8pn/IzdTXKbqbN/aNoLrkoW6W7todmSzH8oMTU8z7cTsSICyks9vH4fJONUb8NGdU8lYTDLOAb2MQdhgB6xMWDfKpkbXPh1TtpKLBR7x45+qzYU49O8uShcbHVEYtP0MLh/2sdyIGZ8zFI69R4JTGGN/6UKaiiyKvHrEvFOjeXIFY8i3la1VRZe0WOdcRC1QIK2rsgQzyJJdA8B0KxY=
+        skip_cleanup: true
+        on:
+          tags: true
+          repo: Mayank1791989/gql-language-server

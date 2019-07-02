@@ -1,0 +1,682 @@
+/* @flow */
+declare module 'vscode-languageserver' {
+  import type {
+    ITextDocument as _ITextDocument,
+    IPosition as _IPosition,
+    ILocation as _ILocation,
+    ICommand as _ICommand,
+    ITextEdit as _ITextEdit,
+    IWorkspaceEdit as _IWorkspaceEdit,
+    ICompletionItem as _ICompletionItem,
+    ICompletionList as _ICompletionList,
+    IHover as _IHover,
+    ISignatureHelp as _ISignatureHelp,
+    IDefinition as _IDefinition,
+    IDocumentHighlight as _IDocumentHighlight,
+    ISymbolInformation as _ISymbolInformation,
+    IDocumentSymbol as _IDocumentSymbol,
+    ICodeAction as _ICodeAction,
+    IDeclaration as _IDeclaration,
+    IDeclarationLink as _IDeclarationLink,
+    IDefinitionLink as _IDefinitionLink,
+    ICodeLens as _ICodeLens,
+    IDocumentLink as _IDocumentLink,
+    IRange as _IRange,
+    IColorInformation as _IColorInformation,
+    IColorPresentation as _IColorPresentation,
+    IFoldingRange as _IFoldingRange,
+    IDiagnostic as _IDiagnostic,
+    DiagnosticSeverityType as _DiagnosticSeverityType,
+    TextDocumentChangeEvent,
+    TextDocumentWillSaveEvent,
+    WorkspaceSymbolParams,
+    DocumentSymbolParams,
+    DidChangeConfigurationParams,
+    DidOpenTextDocumentParams,
+    DidChangeTextDocumentParams,
+    DidCloseTextDocumentParams,
+    DidSaveTextDocumentParams,
+    WillSaveTextDocumentParams,
+    DidChangeWatchedFilesParams,
+    CompletionParams,
+    ReferenceParams,
+    CodeActionParams,
+    CodeLensParams,
+    DocumentFormattingParams,
+    DocumentRangeFormattingParams,
+    DocumentOnTypeFormattingParams,
+    RenameParams,
+    DocumentLinkParams,
+    ExecuteCommandParams,
+    ApplyWorkspaceEditParams,
+    DocumentColorParams,
+    ColorPresentationParams,
+    PublishDiagnosticsParams as _PublishDiagnosticsParams,
+    FoldingRangeParams,
+    TextDocumentPositionParams as _TextDocumentPositionParams,
+    RequestType,
+    RequestType0,
+    RequestHandler,
+    RequestHandler0,
+    GenericRequestHandler,
+    StarRequestHandler,
+    NotificationType,
+    NotificationType0,
+    NotificationHandler,
+    NotificationHandler0,
+    GenericNotificationHandler,
+    StarNotificationHandler,
+    RPCMessageType,
+    MessageReader,
+    MessageWriter,
+    CancellationToken,
+    Disposable,
+    Event,
+    ConnectionStrategy,
+    InitializeParams,
+    InitializeResult,
+    IInitializeError,
+    InitializedParams,
+    MessageActionItem,
+    ApplyWorkspaceEditResponse,
+    ClientCapabilities,
+    ServerCapabilities,
+    TextDocumentSyncKindType as _TextDocumentSyncKindType,
+  } from 'vscode-languageserver-protocol';
+
+  import typeof {
+    TextDocumentSyncKind as _TextDocumentSyncKind,
+    CompletionItemKind as _CompletionItemKind,
+    DiagnosticSeverity as _DiagnosticSeverity,
+    DidOpenTextDocumentNotification as _DidOpenTextDocumentNotification,
+    DidChangeTextDocumentNotification as _DidChangeTextDocumentNotification,
+    DidCloseTextDocumentNotification as _DidCloseTextDocumentNotification,
+    CompletionRequest as _CompletionRequest,
+    HoverRequest as _HoverRequest,
+    DefinitionRequest as _DefinitionRequest,
+    ReferencesRequest as _ReferencesRequest,
+  } from 'vscode-languageserver-protocol';
+
+  declare export type ITextDocument = _ITextDocument;
+  declare export type IPosition = _IPosition;
+  declare export type ILocation = _ILocation;
+  declare export type ICommand = _ICommand;
+  declare export type ITextEdit = _ITextEdit;
+  declare export type IWorkspaceEdit = _IWorkspaceEdit;
+  declare export type ICompletionItem = _ICompletionItem;
+  declare export type ICompletionList = _ICompletionList;
+  declare export type IHover = _IHover;
+  declare export type ISignatureHelp = _ISignatureHelp;
+  declare export type IDefinition = _IDefinition;
+  declare export type IDocumentHighlight = _IDocumentHighlight;
+  declare export type ISymbolInformation = _ISymbolInformation;
+  declare export type IDocumentSymbol = _IDocumentSymbol;
+  declare export type ICodeAction = _ICodeAction;
+  declare export type IDeclaration = _IDeclaration;
+  declare export type IDeclarationLink = _IDeclarationLink;
+  declare export type IDefinitionLink = _IDefinitionLink;
+  declare export type ICodeLens = _ICodeLens;
+  declare export type IDocumentLink = _IDocumentLink;
+  declare export type IRange = _IRange;
+  declare export type IColorInformation = _IColorInformation;
+  declare export type IColorPresentation = _IColorPresentation;
+  declare export type IFoldingRange = _IFoldingRange;
+  declare export type IDiagnostic = _IDiagnostic;
+  declare export type TextDocumentPositionParams = _TextDocumentPositionParams;
+  declare export type PublishDiagnosticsParams = _PublishDiagnosticsParams;
+  declare export type DiagnosticSeverityType = _DiagnosticSeverityType;
+  declare export type TextDocumentSyncKindType = _TextDocumentSyncKindType;
+
+  declare export var TextDocumentSyncKind: _TextDocumentSyncKind;
+  declare export var DidOpenTextDocumentNotification: _DidOpenTextDocumentNotification;
+  declare export var DidChangeTextDocumentNotification: _DidChangeTextDocumentNotification;
+  declare export var DidCloseTextDocumentNotification: _DidOpenTextDocumentNotification;
+  declare export var CompletionRequest: _CompletionRequest;
+  declare export var HoverRequest: _HoverRequest;
+  declare export var DefinitionRequest: _DefinitionRequest;
+  declare export var ReferencesRequest: _ReferencesRequest;
+  declare export var CompletionItemKind: _CompletionItemKind;
+  declare export var DiagnosticSeverity: _DiagnosticSeverity;
+
+  declare export class TextDocuments {
+    constructor(syncKind?: TextDocumentSyncKindType): this;
+    syncKind: TextDocumentSyncKindType;
+    onDidChangeContent: Event<TextDocumentChangeEvent>;
+    onDidOpen: Event<TextDocumentChangeEvent>;
+    onWillSave: Event<TextDocumentWillSaveEvent>;
+    onWillSaveWaitUntil(
+      handler: RequestHandler<TextDocumentWillSaveEvent, ITextEdit[], void>,
+    ): void;
+    onDidSave: Event<TextDocumentChangeEvent>;
+    onDidClose: Event<TextDocumentChangeEvent>;
+    get(uri: string): ITextDocument | void;
+    all(): ITextDocument[];
+    keys(): string[];
+    listen(connection: IConnection): void;
+  }
+  /**
+   * An empty interface for new proposed API.
+   */
+  declare export interface _I {}
+
+  declare export class ErrorMessageTracker {
+    constructor(): this;
+    add(message: string): void;
+    sendErrors(connection: {
+      window: RemoteWindow,
+    }): void;
+  }
+  /**
+   *
+   */
+  declare export interface Remote {
+    attach(connection: IConnection): void;
+    connection: IConnection;
+    initialize(capabilities: ClientCapabilities): void;
+    fillServerCapabilities(capabilities: ServerCapabilities): void;
+  }
+
+  declare export interface RemoteConsole extends Remote {
+    error(message: string): void;
+    warn(message: string): void;
+    info(message: string): void;
+    log(message: string): void;
+  }
+
+  declare export interface RemoteWindow extends Remote {
+    showErrorMessage(message: string): void;
+    showErrorMessage<T: MessageActionItem>(
+      message: string,
+      ...actions: T[]
+    ): Thenable<T | void>;
+    showWarningMessage(message: string): void;
+    showWarningMessage<T: MessageActionItem>(
+      message: string,
+      ...actions: T[]
+    ): Thenable<T | void>;
+    showInformationMessage(message: string): void;
+    showInformationMessage<T: MessageActionItem>(
+      message: string,
+      ...actions: T[]
+    ): Thenable<T | void>;
+  }
+
+  declare export interface IBulkRegistration {
+    add<RO>(type: NotificationType0<RO>, registerParams: RO): void;
+    add<P, RO>(type: NotificationType<P, RO>, registerParams: RO): void;
+    add<R, E, RO>(type: RequestType0<R, E, RO>, registerParams: RO): void;
+    add<P, R, E, RO>(type: RequestType<P, R, E, RO>, registerParams: RO): void;
+  }
+  declare export class BulkRegistration {
+    static create(): IBulkRegistration;
+  }
+
+  declare export interface IBulkUnregistration extends Disposable {
+    disposeSingle(arg: string | RPCMessageType): boolean;
+  }
+  declare export class BulkUnregistration {
+    static create(): IBulkUnregistration;
+  }
+
+  declare export interface RemoteClient extends Remote {
+    register<RO>(
+      type: NotificationType0<RO>,
+      registerParams?: RO,
+    ): Thenable<Disposable>;
+    register<P, RO>(
+      type: NotificationType<P, RO>,
+      registerParams?: RO,
+    ): Thenable<Disposable>;
+    register<RO>(
+      unregisteration: BulkUnregistration,
+      type: NotificationType0<RO>,
+      registerParams?: RO,
+    ): Thenable<BulkUnregistration>;
+    register<P, RO>(
+      unregisteration: BulkUnregistration,
+      type: NotificationType<P, RO>,
+      registerParams?: RO,
+    ): Thenable<BulkUnregistration>;
+    register<R, E, RO>(
+      type: RequestType0<R, E, RO>,
+      registerParams?: RO,
+    ): Thenable<Disposable>;
+    register<P, R, E, RO>(
+      type: RequestType<P, R, E, RO>,
+      registerParams?: RO,
+    ): Thenable<Disposable>;
+    register<R, E, RO>(
+      unregisteration: BulkUnregistration,
+      type: RequestType0<R, E, RO>,
+      registerParams?: RO,
+    ): Thenable<BulkUnregistration>;
+    register<P, R, E, RO>(
+      unregisteration: BulkUnregistration,
+      type: RequestType<P, R, E, RO>,
+      registerParams?: RO,
+    ): Thenable<BulkUnregistration>;
+    register(registrations: IBulkRegistration): Thenable<IBulkUnregistration>;
+  }
+
+  declare export interface _RemoteWorkspace extends Remote {
+    applyEdit(
+      paramOrEdit: ApplyWorkspaceEditParams | IWorkspaceEdit,
+    ): Thenable<ApplyWorkspaceEditResponse>;
+  }
+  declare export type RemoteWorkspace = _RemoteWorkspace &
+    Configuration &
+    WorkspaceFolders;
+
+  declare export interface Telemetry extends Remote {
+    logEvent(data: any): void;
+  }
+
+  declare export interface Tracer extends Remote {
+    log(message: string, verbose?: string): void;
+  }
+
+  declare export type Connection<
+    PConsole = _I,
+    PTracer = _I,
+    PTelemetry = _I,
+    PClient = _I,
+    PWindow = _I,
+    PWorkspace = _I,
+  > = {
+    listen(): void,
+    onRequest<R, E, RO>(
+      type: RequestType0<R, E, RO>,
+      handler: RequestHandler0<R, E>,
+    ): void,
+    onRequest<P, R, E, RO>(
+      type: RequestType<P, R, E, RO>,
+      handler: RequestHandler<P, R, E>,
+    ): void,
+    onRequest<R, E>(method: string, handler: GenericRequestHandler<R, E>): void,
+    onRequest(handler: StarRequestHandler): void,
+    sendRequest<R, E, RO>(
+      type: RequestType0<R, E, RO>,
+      token?: CancellationToken,
+    ): Thenable<R>,
+    sendRequest<P, R, E, RO>(
+      type: RequestType<P, R, E, RO>,
+      params: P,
+      token?: CancellationToken,
+    ): Thenable<R>,
+    sendRequest<R>(method: string, token?: CancellationToken): Thenable<R>,
+    sendRequest<R>(
+      method: string,
+      params: any,
+      token?: CancellationToken,
+    ): Thenable<R>,
+    onNotification<RO>(
+      type: NotificationType0<RO>,
+      handler: NotificationHandler0,
+    ): void,
+    onNotification<P, RO>(
+      type: NotificationType<P, RO>,
+      handler: NotificationHandler<P>,
+    ): void,
+    onNotification(method: string, handler: GenericNotificationHandler): void,
+    onNotification(handler: StarNotificationHandler): void,
+    sendNotification<RO>(type: NotificationType0<RO>): void,
+    sendNotification<P, RO>(type: NotificationType<P, RO>, params: P): void,
+    sendNotification(method: string, params?: any): void,
+    onInitialize(
+      handler: RequestHandler<
+        InitializeParams,
+        InitializeResult,
+        IInitializeError,
+      >,
+    ): void,
+    onInitialized(handler: NotificationHandler<InitializedParams>): void,
+    onShutdown(handler: RequestHandler0<void, void>): void,
+    onExit(handler: NotificationHandler0): void,
+    console: RemoteConsole & PConsole,
+    tracer: Tracer & PTracer,
+    telemetry: Telemetry & PTelemetry,
+    client: RemoteClient & PClient,
+    window: RemoteWindow & PWindow,
+    workspace: RemoteWorkspace & PWorkspace,
+    onDidChangeConfiguration(
+      handler: NotificationHandler<DidChangeConfigurationParams>,
+    ): void,
+    onDidChangeWatchedFiles(
+      handler: NotificationHandler<DidChangeWatchedFilesParams>,
+    ): void,
+    onDidOpenTextDocument(
+      handler: NotificationHandler<DidOpenTextDocumentParams>,
+    ): void,
+    onDidChangeTextDocument(
+      handler: NotificationHandler<DidChangeTextDocumentParams>,
+    ): void,
+    onDidCloseTextDocument(
+      handler: NotificationHandler<DidCloseTextDocumentParams>,
+    ): void,
+    onWillSaveTextDocument(
+      handler: NotificationHandler<WillSaveTextDocumentParams>,
+    ): void,
+    onWillSaveTextDocumentWaitUntil(
+      handler: RequestHandler<
+        WillSaveTextDocumentParams,
+        ITextEdit[] | void | null,
+        void,
+      >,
+    ): void,
+    onDidSaveTextDocument(
+      handler: NotificationHandler<DidSaveTextDocumentParams>,
+    ): void,
+    sendDiagnostics(params: PublishDiagnosticsParams): void,
+    onHover(
+      handler: RequestHandler<
+        TextDocumentPositionParams,
+        IHover | void | null,
+        void,
+      >,
+    ): void,
+    onCompletion(
+      handler: RequestHandler<
+        CompletionParams,
+        ICompletionItem[] | ICompletionList | void | null,
+        void,
+      >,
+    ): void,
+    onCompletionResolve(
+      handler: RequestHandler<ICompletionItem, ICompletionItem, void>,
+    ): void,
+    onSignatureHelp(
+      handler: RequestHandler<
+        TextDocumentPositionParams,
+        ISignatureHelp | void | null,
+        void,
+      >,
+    ): void,
+    onDeclaration(
+      handler: RequestHandler<
+        TextDocumentPositionParams,
+        IDeclaration | IDeclarationLink[] | void | null,
+        void,
+      >,
+    ): void,
+    onDefinition(
+      handler: RequestHandler<
+        TextDocumentPositionParams,
+        IDefinition | IDefinitionLink[] | void | null,
+        void,
+      >,
+    ): void,
+    onTypeDefinition(
+      handler: RequestHandler<
+        TextDocumentPositionParams,
+        IDefinition | void | null,
+        void,
+      >,
+    ): void,
+    onImplementation(
+      handler: RequestHandler<
+        TextDocumentPositionParams,
+        IDefinition | void | null,
+        void,
+      >,
+    ): void,
+    onReferences(
+      handler: RequestHandler<ReferenceParams, ILocation[] | void | null, void>,
+    ): void,
+    onDocumentHighlight(
+      handler: RequestHandler<
+        TextDocumentPositionParams,
+        IDocumentHighlight[] | void | null,
+        void,
+      >,
+    ): void,
+    onDocumentSymbol(
+      handler: RequestHandler<
+        DocumentSymbolParams,
+        ISymbolInformation[] | IDocumentSymbol[] | void | null,
+        void,
+      >,
+    ): void,
+    onWorkspaceSymbol(
+      handler: RequestHandler<
+        WorkspaceSymbolParams,
+        ISymbolInformation[] | void | null,
+        void,
+      >,
+    ): void,
+    onCodeAction(
+      handler: RequestHandler<
+        CodeActionParams,
+        (ICommand | ICodeAction)[] | void | null,
+        void,
+      >,
+    ): void,
+    onCodeLens(
+      handler: RequestHandler<CodeLensParams, ICodeLens[] | void | null, void>,
+    ): void,
+    onCodeLensResolve(
+      handler: RequestHandler<ICodeLens, ICodeLens, void>,
+    ): void,
+    onDocumentFormatting(
+      handler: RequestHandler<
+        DocumentFormattingParams,
+        ITextEdit[] | void | null,
+        void,
+      >,
+    ): void,
+    onDocumentRangeFormatting(
+      handler: RequestHandler<
+        DocumentRangeFormattingParams,
+        ITextEdit[] | void | null,
+        void,
+      >,
+    ): void,
+    onDocumentOnTypeFormatting(
+      handler: RequestHandler<
+        DocumentOnTypeFormattingParams,
+        ITextEdit[] | void | null,
+        void,
+      >,
+    ): void,
+    onRenameRequest(
+      handler: RequestHandler<RenameParams, IWorkspaceEdit | void | null, void>,
+    ): void,
+    onPrepareRename(
+      handler: RequestHandler<
+        TextDocumentPositionParams,
+        | IRange
+        | {
+            range: IRange,
+            placeholder: string,
+          }
+        | void
+        | null,
+        void,
+      >,
+    ): void,
+    onDocumentLinks(
+      handler: RequestHandler<
+        DocumentLinkParams,
+        IDocumentLink[] | void | null,
+        void,
+      >,
+    ): void,
+    onDocumentLinkResolve(
+      handler: RequestHandler<IDocumentLink, IDocumentLink | void | null, void>,
+    ): void,
+    onDocumentColor(
+      handler: RequestHandler<
+        DocumentColorParams,
+        IColorInformation[] | void | null,
+        void,
+      >,
+    ): void,
+    onColorPresentation(
+      handler: RequestHandler<
+        ColorPresentationParams,
+        IColorPresentation[] | void | null,
+        void,
+      >,
+    ): void,
+    onFoldingRanges(
+      handler: RequestHandler<
+        FoldingRangeParams,
+        IFoldingRange[] | void | null,
+        void,
+      >,
+    ): void,
+    onExecuteCommand(
+      handler: RequestHandler<ExecuteCommandParams, any | void | null, void>,
+    ): void,
+    dispose(): void,
+  };
+
+  declare export type IConnection = Connection<>;
+
+  declare export interface Feature<B, P> {
+    // (Base: new () => B): new () => B & P;
+  }
+  declare export type ConsoleFeature<P> = Feature<RemoteConsole, P>;
+  declare export function combineConsoleFeatures<O, T>(
+    one: ConsoleFeature<O>,
+    two: ConsoleFeature<T>,
+  ): ConsoleFeature<O & T>;
+  declare export type TelemetryFeature<P> = Feature<Telemetry, P>;
+  declare export function combineTelemetryFeatures<O, T>(
+    one: TelemetryFeature<O>,
+    two: TelemetryFeature<T>,
+  ): TelemetryFeature<O & T>;
+  declare export type TracerFeature<P> = Feature<Tracer, P>;
+  declare export function combineTracerFeatures<O, T>(
+    one: TracerFeature<O>,
+    two: TracerFeature<T>,
+  ): TracerFeature<O & T>;
+  declare export type ClientFeature<P> = Feature<RemoteClient, P>;
+  declare export function combineClientFeatures<O, T>(
+    one: ClientFeature<O>,
+    two: ClientFeature<T>,
+  ): ClientFeature<O & T>;
+  declare export type WindowFeature<P> = Feature<RemoteWindow, P>;
+  declare export function combineWindowFeatures<O, T>(
+    one: WindowFeature<O>,
+    two: WindowFeature<T>,
+  ): WindowFeature<O & T>;
+  declare export type WorkspaceFeature<P> = Feature<RemoteWorkspace, P>;
+  declare export function combineWorkspaceFeatures<O, T>(
+    one: WorkspaceFeature<O>,
+    two: WorkspaceFeature<T>,
+  ): WorkspaceFeature<O & T>;
+  declare export interface Features<
+    PConsole = _I,
+    PTracer = _I,
+    PTelemetry = _I,
+    PClient = _I,
+    PWindow = _I,
+    PWorkspace = _I,
+  > {
+    __brand: 'features';
+    console?: ConsoleFeature<PConsole>;
+    tracer?: TracerFeature<PTracer>;
+    telemetry?: TelemetryFeature<PTelemetry>;
+    client?: ClientFeature<PClient>;
+    window?: WindowFeature<PWindow>;
+    workspace?: WorkspaceFeature<PWorkspace>;
+  }
+  declare export function combineFeatures<
+    OConsole,
+    OTracer,
+    OTelemetry,
+    OClient,
+    OWindow,
+    OWorkspace,
+    TConsole,
+    TTracer,
+    TTelemetry,
+    TClient,
+    TWindow,
+    TWorkspace,
+  >(
+    one: Features<OConsole, OTracer, OTelemetry, OClient, OWindow, OWorkspace>,
+    two: Features<TConsole, TTracer, TTelemetry, TClient, TWindow, TWorkspace>,
+  ): Features<
+    OConsole & TConsole,
+    OTracer & TTracer,
+    OTelemetry & TTelemetry,
+    OClient & TClient,
+    OWindow & TWindow,
+    OWorkspace & TWorkspace,
+  >;
+  declare export function createConnection(
+    strategy?: ConnectionStrategy,
+  ): IConnection;
+  declare export function createConnection(
+    inputStream: ReadableStream,
+    outputStream: WritableStream,
+    strategy?: ConnectionStrategy,
+  ): IConnection;
+  declare export function createConnection(
+    reader: MessageReader,
+    writer: MessageWriter,
+    strategy?: ConnectionStrategy,
+  ): IConnection;
+  declare export function createConnection<
+    PConsole = _I,
+    PTracer = _I,
+    PTelemetry = _I,
+    PClient = _I,
+    PWindow = _I,
+    PWorkspace = _I,
+  >(
+    factories: Features<
+      PConsole,
+      PTracer,
+      PTelemetry,
+      PClient,
+      PWindow,
+      PWorkspace,
+    >,
+    strategy?: ConnectionStrategy,
+  ): Connection<PConsole, PTracer, PTelemetry, PClient, PWindow, PWorkspace>;
+  declare export function createConnection<
+    PConsole = _I,
+    PTracer = _I,
+    PTelemetry = _I,
+    PClient = _I,
+    PWindow = _I,
+    PWorkspace = _I,
+  >(
+    factories: Features<
+      PConsole,
+      PTracer,
+      PTelemetry,
+      PClient,
+      PWindow,
+      PWorkspace,
+    >,
+    inputStream: ReadableStream,
+    outputStream: WritableStream,
+    strategy?: ConnectionStrategy,
+  ): Connection<PConsole, PTracer, PTelemetry, PClient, PWindow, PWorkspace>;
+  declare export function createConnection<
+    PConsole = _I,
+    PTracer = _I,
+    PTelemetry = _I,
+    PClient = _I,
+    PWindow = _I,
+    PWorkspace = _I,
+  >(
+    factories: Features<
+      PConsole,
+      PTracer,
+      PTelemetry,
+      PClient,
+      PWindow,
+      PWorkspace,
+    >,
+    reader: MessageReader,
+    writer: MessageWriter,
+    strategy?: ConnectionStrategy,
+  ): Connection<PConsole, PTracer, PTelemetry, PClient, PWindow, PWorkspace>;
+  declare export class ProposedFeatures {
+    static all: Features<_I, _I, _I, _I, _I, _I>;
+  }
+}

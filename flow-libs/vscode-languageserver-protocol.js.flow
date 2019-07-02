@@ -1,0 +1,1031 @@
+/* @flow */
+declare module 'vscode-languageserver-protocol' {
+  import type {
+    RequestType as _RequestType,
+    RequestType0 as _RequestType0,
+    NotificationType as _NotificationType,
+    NotificationType0 as _NotificationType0,
+    RequestHandler as _RequestHandler,
+    RequestHandler0 as _RequestHandler0,
+  } from 'vscode-jsonrpc';
+
+  declare export type NotificationType<P, RO> = _NotificationType<P, RO>;
+  declare export type NotificationType0<RO> = _NotificationType0<RO>;
+  declare export type RequestType<P, R, E, RO> = _RequestType<P, R, E, RO>;
+  declare export type RequestType0<R, E, RO> = _RequestType0<R, E, RO>;
+  declare export type RequestHandler<P, R, E> = _RequestHandler<P, R, E>;
+  declare export type RequestHandler0<R, E> = _RequestHandler0<R, E>;
+
+  // import { ImplementationRequest, ImplementationClientCapabilities, ImplementationServerCapabilities } from './protocol.implementation';
+  // import { TypeDefinitionRequest, TypeDefinitionClientCapabilities, TypeDefinitionServerCapabilities } from './protocol.typeDefinition';
+  // import { WorkspaceFoldersRequest, DidChangeWorkspaceFoldersNotification, DidChangeWorkspaceFoldersParams, WorkspaceFolder, WorkspaceFoldersChangeEvent, WorkspaceFoldersInitializeParams, WorkspaceFoldersClientCapabilities, WorkspaceFoldersServerCapabilities } from './protocol.workspaceFolders';
+  // import { ConfigurationRequest, ConfigurationParams, ConfigurationItem, ConfigurationClientCapabilities } from './protocol.configuration';
+  // import { FoldingRangeClientCapabilities, FoldingRangeProviderOptions, FoldingRangeRequest, FoldingRangeParams, FoldingRangeServerCapabilities } from './protocol.foldingRange';
+  // import { DeclarationClientCapabilities, DeclarationRequest, DeclarationServerCapabilities } from './protocol.declaration';
+  import type {
+    ITextDocumentItem,
+    IVersionedTextDocumentIdentifier,
+    TextDocumentContentChangeEvent,
+    ITextDocument as _ITextDocument,
+    IPosition as _IPosition,
+    IRange as _IRange,
+    ILocation as _ILocation,
+    ILocationLink as _ILocationLink,
+    IDiagnostic as _IDiagnostic,
+    IHover as _IHover,
+    ICompletionList as _ICompletionList,
+    ICompletionItem as _ICompletionItem,
+    ITextDocumentIdentifier as _ITextDocumentIdentifier,
+    IDefinition as _IDefinition,
+    ICodeLens as _ICodeLens,
+    IWorkspaceEdit as _IWorkspaceEdit,
+    ITextEdit as _ITextEdit,
+    ISignatureHelp as _ISignatureHelp,
+    IDocumentSymbol as _IDocumentSymbol,
+    ICommand as _ICommand,
+    IColor as _IColor,
+    IDocumentHighlight as _IDocumentHighlight,
+    ISymbolInformation as _ISymbolInformation,
+    ICodeAction as _ICodeAction,
+    IDocumentLink as _IDocumentLink,
+    IDeclaration as _IDeclaration,
+    IDefinitionLink as _IDefinitionLink,
+    IDeclarationLink as _IDeclarationLink,
+    IColorInformation as _IColorInformation,
+    IColorPresentation as _IColorPresentation,
+    IFoldingRange as _IFoldingRange,
+    DiagnosticSeverityType as _DiagnosticSeverityType,
+    TextDocumentChangeEvent as _TextDocumentChangeEvent,
+    TextDocumentWillSaveEvent as _TextDocumentWillSaveEvent,
+    WorkspaceSymbolParams as _WorkspaceSymbolParams,
+    DocumentSymbolParams as _DocumentSymbolParams,
+    SymbolKindType as _SymbolKindType,
+    MarkupKindType as _MarkupKindType,
+    CompletionItemKindType as _CompletionItemKindType,
+    CodeActionKindType as _CodeActionKindType,
+    IFormattingOptions as _IFormattingOptions,
+    ICodeActionContext as _ICodeActionContext,
+    IReferenceContext as _IReferenceContext,
+    TextDocumentSaveReasonType as _TextDocumentSaveReasonType,
+  } from 'vscode-languageserver-types';
+  import typeof {
+    TextDocument as _TextDocument,
+    Position as _Position,
+    Range as _Range,
+    Location as _Location,
+    Diagnostic as _Diagnostic,
+    Hover as _Hover,
+    CompletionItem as _CompletionItem,
+    DiagnosticSeverity as _DiagnosticSeverity,
+    CompletionItemKind as _CompletionItemKind,
+  } from 'vscode-languageserver-types';
+
+  declare export type ITextDocument = _ITextDocument;
+  declare export type IPosition = _IPosition;
+  declare export type IRange = _IRange;
+  declare export type ILocation = _ILocation;
+  declare export type ILocationLink = _ILocationLink;
+  declare export type IDiagnostic = _IDiagnostic;
+  declare export type IHover = _IHover;
+  declare export type ICompletionList = _ICompletionList;
+  declare export type ICompletionItem = _ICompletionItem;
+  declare export type DiagnosticSeverityType = _DiagnosticSeverityType;
+  declare export type ITextDocumentIdentifier = _ITextDocumentIdentifier;
+  declare export type IDefinition = _IDefinition;
+  declare export type ICodeLens = _ICodeLens;
+  declare export type IWorkspaceEdit = _IWorkspaceEdit;
+  declare export type ITextEdit = _ITextEdit;
+  declare export type ISignatureHelp = _ISignatureHelp;
+  declare export type IDocumentSymbol = _IDocumentSymbol;
+  declare export type ICommand = _ICommand;
+  declare export type IDocumentHighlight = _IDocumentHighlight;
+  declare export type ISymbolInformation = _ISymbolInformation;
+  declare export type ICodeAction = _ICodeAction;
+  declare export type IDefinitionLink = _IDefinitionLink;
+  declare export type IDeclaration = _IDeclaration;
+  declare export type IDeclarationLink = _IDeclarationLink;
+  declare export type IDocumentLink = _IDocumentLink;
+  declare export type IColor = _IColor;
+  declare export type IColorInformation = _IColorInformation;
+  declare export type IColorPresentation = _IColorPresentation;
+  declare export type IFoldingRange = _IFoldingRange;
+  declare export type SymbolKindType = _SymbolKindType;
+  declare export type MarkupKindType = _MarkupKindType;
+  declare export type CompletionItemKindType = _CompletionItemKindType;
+  declare export type CodeActionKindType = _CodeActionKindType;
+  declare export type IFormattingOptions = _IFormattingOptions;
+  declare export type TextDocumentChangeEvent = _TextDocumentChangeEvent;
+  declare export type TextDocumentWillSaveEvent = _TextDocumentWillSaveEvent;
+  declare export type DocumentSymbolParams = _DocumentSymbolParams;
+  declare export type WorkspaceSymbolParams = _WorkspaceSymbolParams;
+  declare export type ICodeActionContext = _ICodeActionContext;
+  declare export type IReferenceContext = _IReferenceContext;
+  declare export type TextDocumentSaveReasonType = _TextDocumentSaveReasonType;
+
+  declare export var Position: _Position;
+  declare export var Range: _Range;
+  declare export var DiagnosticSeverity: _DiagnosticSeverity;
+  declare export var Hover: _Hover;
+  declare export var Location: _Location;
+  declare export var Diagnostic: _Diagnostic;
+  declare export var CompletionItemKind: _CompletionItemKind;
+
+  declare export type IDocumentFilter =
+    | {
+        language: string,
+        scheme?: string,
+        pattern?: string,
+      }
+    | {
+        language?: string,
+        scheme: string,
+        pattern?: string,
+      }
+    | {
+        language?: string,
+        scheme?: string,
+        pattern: string,
+      };
+  declare export class DocumentFilter {
+    static is(value: any): boolean;
+  }
+
+  declare export type DocumentSelector = (string | IDocumentFilter)[];
+
+  declare export interface Registration {
+    id: string;
+    method: string;
+    registerOptions?: any;
+  }
+  declare export interface RegistrationParams {
+    registrations: Registration[];
+  }
+
+  declare export var RegistrationRequest: {
+    type: RequestType<RegistrationParams, void, void, void>,
+  };
+
+  declare export interface Unregistration {
+    id: string;
+    method: string;
+  }
+  declare export interface UnregistrationParams {
+    unregisterations: Unregistration[];
+  }
+  declare export var UnregistrationRequest: {
+    type: RequestType<UnregistrationParams, void, void, void>,
+  };
+  declare export interface TextDocumentPositionParams {
+    textDocument: ITextDocumentIdentifier;
+    position: IPosition;
+  }
+
+  declare export type ResourceOperationKind = 'create' | 'rename' | 'delete';
+  declare export var ResourceOperationKindType: {
+    Create: ResourceOperationKind,
+    Rename: ResourceOperationKind,
+    Delete: ResourceOperationKind,
+  };
+  declare export type FailureHandlingKind =
+    | 'abort'
+    | 'transactional'
+    | 'undo'
+    | 'textOnlyTransactional';
+  declare export var FailureHandlingKindType: {
+    Abort: FailureHandlingKind,
+    Transactional: FailureHandlingKind,
+    TextOnlyTransactional: FailureHandlingKind,
+    Undo: FailureHandlingKind,
+  };
+
+  declare export interface WorkspaceClientCapabilities {
+    applyEdit?: boolean;
+    workspaceEdit?: {
+      documentChanges?: boolean,
+      resourceOperations?: ResourceOperationKind[],
+      failureHandling?: FailureHandlingKind,
+    };
+
+    didChangeConfiguration?: {
+      dynamicRegistration?: boolean,
+    };
+
+    didChangeWatchedFiles?: {
+      dynamicRegistration?: boolean,
+    };
+
+    symbol?: {
+      dynamicRegistration?: boolean,
+      symbolKind?: {
+        valueSet?: SymbolKindType[],
+      },
+    };
+
+    executeCommand?: {
+      dynamicRegistration?: boolean,
+    };
+  }
+
+  declare export interface TextDocumentClientCapabilities {
+    synchronization?: {
+      dynamicRegistration?: boolean,
+      willSave?: boolean,
+      willSaveWaitUntil?: boolean,
+      didSave?: boolean,
+    };
+
+    completion?: {
+      dynamicRegistration?: boolean,
+      completionItem?: {
+        snippetSupport?: boolean,
+        commitCharactersSupport?: boolean,
+        documentationFormat?: MarkupKindType[],
+        deprecatedSupport?: boolean,
+        preselectSupport?: boolean,
+      },
+      completionItemKind?: {
+        valueSet?: CompletionItemKindType[],
+      },
+      contextSupport?: boolean,
+    };
+
+    hover?: {
+      dynamicRegistration?: boolean,
+      contentFormat?: MarkupKindType[],
+    };
+
+    signatureHelp?: {
+      dynamicRegistration?: boolean,
+      signatureInformation?: {
+        documentationFormat?: MarkupKindType[],
+        parameterInformation?: {
+          labelOffsetSupport?: boolean,
+        },
+      },
+    };
+    references?: {
+      dynamicRegistration?: boolean,
+    };
+    documentHighlight?: {
+      dynamicRegistration?: boolean,
+    };
+    documentSymbol?: {
+      dynamicRegistration?: boolean,
+      symbolKind?: {
+        valueSet?: SymbolKindType[],
+      },
+      hierarchicalDocumentSymbolSupport?: boolean,
+    };
+    formatting?: {
+      dynamicRegistration?: boolean,
+    };
+    rangeFormatting?: {
+      dynamicRegistration?: boolean,
+    };
+    onTypeFormatting?: {
+      dynamicRegistration?: boolean,
+    };
+    definition?: {
+      dynamicRegistration?: boolean,
+      linkSupport?: boolean,
+    };
+    codeAction?: {
+      dynamicRegistration?: boolean,
+      codeActionLiteralSupport?: {
+        codeActionKind: {
+          valueSet: CodeActionKindType[],
+        },
+      },
+    };
+    codeLens?: {
+      dynamicRegistration?: boolean,
+    };
+    documentLink?: {
+      dynamicRegistration?: boolean,
+    };
+    rename?: {
+      dynamicRegistration?: boolean,
+      prepareSupport?: boolean,
+    };
+    publishDiagnostics?: {
+      relatedInformation?: boolean,
+    };
+  }
+
+  declare export interface _ClientCapabilities {
+    workspace?: WorkspaceClientCapabilities;
+    textDocument?: TextDocumentClientCapabilities;
+    experimental?: any;
+  }
+  declare export type ClientCapabilities = _ClientCapabilities &
+    ImplementationClientCapabilities &
+    TypeDefinitionClientCapabilities &
+    WorkspaceFoldersClientCapabilities &
+    ConfigurationClientCapabilities &
+    ColorClientCapabilities &
+    FoldingRangeClientCapabilities &
+    DeclarationClientCapabilities;
+
+  declare export var TextDocumentSyncKind: {
+    None: 0,
+    Full: 1,
+    Incremental: 2,
+  };
+  declare export type TextDocumentSyncKindType = 0 | 1 | 2;
+
+  declare export interface StaticRegistrationOptions {
+    id?: string;
+  }
+
+  declare export interface TextDocumentRegistrationOptions {
+    documentSelector: DocumentSelector | null;
+  }
+
+  declare export interface CompletionOptions {
+    triggerCharacters?: string[];
+    resolveProvider?: boolean;
+  }
+
+  declare export interface SignatureHelpOptions {
+    triggerCharacters?: string[];
+  }
+
+  declare export interface CodeActionOptions {
+    codeActionKinds?: CodeActionKindType[];
+  }
+
+  declare export interface CodeLensOptions {
+    resolveProvider?: boolean;
+  }
+
+  declare export interface DocumentOnTypeFormattingOptions {
+    firstTriggerCharacter: string;
+    moreTriggerCharacter?: string[];
+  }
+
+  declare export interface RenameOptions {
+    prepareProvider?: boolean;
+  }
+
+  declare export interface DocumentLinkOptions {
+    resolveProvider?: boolean;
+  }
+
+  declare export interface ExecuteCommandOptions {
+    commands: string[];
+  }
+
+  declare export interface SaveOptions {
+    includeText?: boolean;
+  }
+
+  declare export interface TextDocumentSyncOptions {
+    openClose?: boolean;
+    change?: TextDocumentSyncKindType;
+    willSave?: boolean;
+    willSaveWaitUntil?: boolean;
+    save?: SaveOptions;
+  }
+
+  declare export interface _ServerCapabilities {
+    textDocumentSync?: TextDocumentSyncOptions | TextDocumentSyncKindType;
+    hoverProvider?: boolean;
+    completionProvider?: CompletionOptions;
+    signatureHelpProvider?: SignatureHelpOptions;
+    definitionProvider?: boolean;
+    referencesProvider?: boolean;
+    documentHighlightProvider?: boolean;
+    documentSymbolProvider?: boolean;
+    workspaceSymbolProvider?: boolean;
+    codeActionProvider?: boolean | CodeActionOptions;
+    codeLensProvider?: CodeLensOptions;
+    documentFormattingProvider?: boolean;
+    documentRangeFormattingProvider?: boolean;
+    documentOnTypeFormattingProvider?: {
+      firstTriggerCharacter: string,
+      moreTriggerCharacter?: string[],
+    };
+    renameProvider?: boolean | RenameOptions;
+    documentLinkProvider?: DocumentLinkOptions;
+    executeCommandProvider?: ExecuteCommandOptions;
+    experimental?: any;
+  }
+
+  declare export type ServerCapabilities = _ServerCapabilities &
+    ImplementationServerCapabilities &
+    TypeDefinitionServerCapabilities &
+    WorkspaceFoldersServerCapabilities &
+    ColorServerCapabilities &
+    FoldingRangeServerCapabilities &
+    DeclarationServerCapabilities;
+
+  declare export var InitializeRequest: {
+    type: RequestType<
+      InitializeParams,
+      InitializeResult,
+      IInitializeError,
+      void,
+    >,
+  };
+
+  declare export interface _InitializeParams {
+    processId: number | null;
+    rootPath?: string | null;
+    rootUri: string | null;
+    capabilities: ClientCapabilities;
+    initializationOptions?: any;
+    trace?: 'off' | 'messages' | 'verbose';
+  }
+
+  declare export type InitializeParams = _InitializeParams &
+    WorkspaceFoldersInitializeParams;
+
+  declare export interface InitializeResult {
+    capabilities: ServerCapabilities;
+    [custom: string]: any;
+  }
+
+  declare export var InitializeError: {
+    unknownProtocolVersion: number,
+  };
+
+  declare export interface IInitializeError {
+    retry: boolean;
+  }
+
+  declare export interface InitializedParams {}
+
+  declare export var InitializedNotification: {
+    type: NotificationType<InitializedParams, void>,
+  };
+
+  declare export var ShutdownRequest: {
+    type: RequestType0<void, void, void>,
+  };
+
+  declare export var ExitNotification: {
+    type: NotificationType0<void>,
+  };
+
+  declare export var DidChangeConfigurationNotification: {
+    type: NotificationType<
+      DidChangeConfigurationParams,
+      DidChangeConfigurationRegistrationOptions,
+    >,
+  };
+  declare export interface DidChangeConfigurationRegistrationOptions {
+    section?: string | string[];
+  }
+
+  declare export interface DidChangeConfigurationParams {
+    settings: any;
+  }
+
+  declare export var MessageType: {
+    Error: 1,
+    Warning: 2,
+    Info: 3,
+    Log: 4,
+  };
+  declare export type MessageTypeValue = 1 | 2 | 3 | 4;
+
+  declare export interface ShowMessageParams {
+    type: MessageTypeValue;
+    message: string;
+  }
+
+  declare export var ShowMessageNotification: {
+    type: NotificationType<ShowMessageParams, void>,
+  };
+  declare export interface MessageActionItem {
+    title: string;
+  }
+  declare export interface ShowMessageRequestParams {
+    type: MessageTypeValue;
+    message: string;
+    actions?: MessageActionItem[];
+  }
+
+  declare export var ShowMessageRequest: {
+    type: RequestType<
+      ShowMessageRequestParams,
+      MessageActionItem | null,
+      void,
+      void,
+    >,
+  };
+
+  declare export var LogMessageNotification: {
+    type: NotificationType<LogMessageParams, void>,
+  };
+
+  declare export interface LogMessageParams {
+    type: MessageTypeValue;
+    message: string;
+  }
+
+  declare export var TelemetryEventNotification: {
+    type: NotificationType<any, void>,
+  };
+
+  declare export interface DidOpenTextDocumentParams {
+    textDocument: ITextDocumentItem;
+  }
+
+  declare export var DidOpenTextDocumentNotification: {
+    type: NotificationType<
+      DidOpenTextDocumentParams,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export interface DidChangeTextDocumentParams {
+    textDocument: IVersionedTextDocumentIdentifier;
+    contentChanges: TextDocumentContentChangeEvent[];
+  }
+
+  declare export interface TextDocumentChangeRegistrationOptions
+    extends TextDocumentRegistrationOptions {
+    syncKind: TextDocumentSyncKindType;
+  }
+
+  declare export var DidChangeTextDocumentNotification: {
+    type: NotificationType<
+      DidChangeTextDocumentParams,
+      TextDocumentChangeRegistrationOptions,
+    >,
+  };
+
+  declare export interface DidCloseTextDocumentParams {
+    textDocument: ITextDocumentIdentifier;
+  }
+
+  declare export var DidCloseTextDocumentNotification: {
+    type: NotificationType<
+      DidCloseTextDocumentParams,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export interface DidSaveTextDocumentParams {
+    textDocument: IVersionedTextDocumentIdentifier;
+    text?: string;
+  }
+
+  declare export interface TextDocumentSaveRegistrationOptions
+    extends TextDocumentRegistrationOptions,
+      SaveOptions {}
+
+  declare export var DidSaveTextDocumentNotification: {
+    type: NotificationType<
+      DidSaveTextDocumentParams,
+      TextDocumentSaveRegistrationOptions,
+    >,
+  };
+
+  declare export interface WillSaveTextDocumentParams {
+    textDocument: ITextDocumentIdentifier;
+    reason: TextDocumentSaveReasonType;
+  }
+
+  declare export var WillSaveTextDocumentNotification: {
+    type: NotificationType<
+      WillSaveTextDocumentParams,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export var WillSaveTextDocumentWaitUntilRequest: {
+    type: RequestType<
+      WillSaveTextDocumentParams,
+      ITextEdit[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export var DidChangeWatchedFilesNotification: {
+    type: NotificationType<
+      DidChangeWatchedFilesParams,
+      DidChangeWatchedFilesRegistrationOptions,
+    >,
+  };
+
+  declare export interface DidChangeWatchedFilesParams {
+    changes: FileEvent[];
+  }
+
+  declare export var FileChangeType: {
+    Created: 1,
+    Changed: 2,
+    Deleted: 3,
+  };
+  declare export type FileChangeTypeValue = 1 | 2 | 3;
+
+  declare export interface FileEvent {
+    uri: string;
+    type: FileChangeTypeValue;
+  }
+
+  declare export interface DidChangeWatchedFilesRegistrationOptions {
+    watchers: FileSystemWatcher[];
+  }
+  declare export interface FileSystemWatcher {
+    globPattern: string;
+    kind?: number;
+  }
+  declare export var WatchKind: {
+    Create: 1,
+    Change: 2,
+    Delete: 4,
+  };
+
+  declare export var PublishDiagnosticsNotification: {
+    type: NotificationType<PublishDiagnosticsParams, void>,
+  };
+
+  declare export interface PublishDiagnosticsParams {
+    uri: string;
+    diagnostics: IDiagnostic[];
+  }
+
+  declare export interface CompletionRegistrationOptions
+    extends TextDocumentRegistrationOptions,
+      CompletionOptions {}
+
+  declare export var CompletionTriggerKind: {
+    Invoked: 1,
+    TriggerCharacter: 2,
+    TriggerForIncompleteCompletions: 3,
+  };
+  declare export type CompletionTriggerKindType = 1 | 2 | 3;
+
+  declare export interface CompletionContext {
+    triggerKind: CompletionTriggerKindType;
+    triggerCharacter?: string;
+  }
+
+  declare export interface CompletionParams extends TextDocumentPositionParams {
+    context?: CompletionContext;
+  }
+
+  declare export var CompletionRequest: {
+    type: RequestType<
+      CompletionParams,
+      ICompletionList | ICompletionItem[] | null,
+      void,
+      CompletionRegistrationOptions,
+    >,
+  };
+
+  declare export var CompletionResolveRequest: {
+    type: RequestType<ICompletionItem, ICompletionItem, void, void>,
+  };
+
+  declare export var HoverRequest: {
+    type: RequestType<
+      TextDocumentPositionParams,
+      IHover | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+  declare export interface SignatureHelpRegistrationOptions
+    extends TextDocumentRegistrationOptions,
+      SignatureHelpOptions {}
+
+  declare export var SignatureHelpRequest: {
+    type: RequestType<
+      TextDocumentPositionParams,
+      ISignatureHelp | null,
+      void,
+      SignatureHelpRegistrationOptions,
+    >,
+  };
+
+  declare export var DefinitionRequest: {
+    type: RequestType<
+      TextDocumentPositionParams,
+      ILocation | ILocation[] | ILocationLink[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export interface ReferenceParams extends TextDocumentPositionParams {
+    context: IReferenceContext;
+  }
+
+  declare export var ReferencesRequest: {
+    type: RequestType<
+      ReferenceParams,
+      ILocation[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export var DocumentHighlightRequest: {
+    type: RequestType<
+      TextDocumentPositionParams,
+      IDocumentHighlight[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export var DocumentSymbolRequest: {
+    type: RequestType<
+      DocumentSymbolParams,
+      IDocumentSymbol[] | ISymbolInformation[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export var WorkspaceSymbolRequest: {
+    type: RequestType<
+      WorkspaceSymbolParams,
+      ISymbolInformation[] | null,
+      void,
+      void,
+    >,
+  };
+
+  declare export interface CodeActionParams {
+    textDocument: ITextDocumentIdentifier;
+    range: Range;
+    context: ICodeActionContext;
+  }
+
+  declare export interface CodeActionRegistrationOptions
+    extends TextDocumentRegistrationOptions,
+      CodeActionOptions {}
+
+  declare export var CodeActionRequest: {
+    type: RequestType<
+      CodeActionParams,
+      (ICommand | ICodeAction)[] | null,
+      void,
+      CodeActionRegistrationOptions,
+    >,
+  };
+
+  declare export interface CodeLensParams {
+    textDocument: ITextDocumentIdentifier;
+  }
+
+  declare export interface CodeLensRegistrationOptions
+    extends TextDocumentRegistrationOptions,
+      CodeLensOptions {}
+
+  declare export var CodeLensRequest: {
+    type: RequestType<
+      CodeLensParams,
+      ICodeLens[] | null,
+      void,
+      CodeLensRegistrationOptions,
+    >,
+  };
+
+  declare export var CodeLensResolveRequest: {
+    type: RequestType<ICodeLens, ICodeLens, void, void>,
+  };
+
+  declare export interface DocumentFormattingParams {
+    textDocument: ITextDocumentIdentifier;
+    options: IFormattingOptions;
+  }
+
+  declare export var DocumentFormattingRequest: {
+    type: RequestType<
+      DocumentFormattingParams,
+      ITextEdit[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+  declare export interface DocumentRangeFormattingParams {
+    textDocument: ITextDocumentIdentifier;
+    range: IRange;
+    options: IFormattingOptions;
+  }
+
+  declare export var DocumentRangeFormattingRequest: {
+    type: RequestType<
+      DocumentRangeFormattingParams,
+      ITextEdit[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+  declare export interface DocumentOnTypeFormattingParams {
+    textDocument: ITextDocumentIdentifier;
+    position: IPosition;
+    ch: string;
+    options: IFormattingOptions;
+  }
+
+  declare export interface DocumentOnTypeFormattingRegistrationOptions
+    extends TextDocumentRegistrationOptions,
+      DocumentOnTypeFormattingOptions {}
+  declare export var DocumentOnTypeFormattingRequest: {
+    type: RequestType<
+      DocumentOnTypeFormattingParams,
+      ITextEdit[] | null,
+      void,
+      DocumentOnTypeFormattingRegistrationOptions,
+    >,
+  };
+  declare export interface RenameParams {
+    textDocument: ITextDocumentIdentifier;
+    position: IPosition;
+    newName: string;
+  }
+
+  declare export var RenameRequest: {
+    type: RequestType<
+      RenameParams,
+      IWorkspaceEdit | null,
+      void,
+      RenameRegistrationOptions,
+    >,
+  };
+
+  declare export var PrepareRenameRequest: {
+    type: RequestType<
+      TextDocumentPositionParams,
+      | IRange
+      | {
+          range: IRange,
+          placeholder: string,
+        }
+      | null,
+      void,
+      void,
+    >,
+  };
+
+  declare export interface RenameRegistrationOptions
+    extends TextDocumentRegistrationOptions,
+      RenameOptions {}
+  declare export interface DocumentLinkParams {
+    textDocument: ITextDocumentIdentifier;
+  }
+
+  declare export interface DocumentLinkRegistrationOptions
+    extends TextDocumentRegistrationOptions,
+      DocumentLinkOptions {}
+
+  declare export var DocumentLinkRequest: {
+    type: RequestType<
+      DocumentLinkParams,
+      IDocumentLink[] | null,
+      void,
+      DocumentLinkRegistrationOptions,
+    >,
+  };
+
+  declare export var DocumentLinkResolveRequest: {
+    type: RequestType<IDocumentLink, IDocumentLink, void, void>,
+  };
+
+  declare export interface ExecuteCommandParams {
+    command: string;
+    arguments?: any[];
+  }
+
+  declare export interface ExecuteCommandRegistrationOptions
+    extends ExecuteCommandOptions {}
+
+  declare export var ExecuteCommandRequest: {
+    type: RequestType<
+      ExecuteCommandParams,
+      any,
+      void,
+      ExecuteCommandRegistrationOptions,
+    >,
+  };
+
+  declare export interface ApplyWorkspaceEditParams {
+    label?: string;
+    edit: IWorkspaceEdit;
+  }
+
+  declare export interface ApplyWorkspaceEditResponse {
+    applied: boolean;
+    failedChange?: number;
+  }
+
+  declare export var ApplyWorkspaceEditRequest: {
+    type: RequestType<
+      ApplyWorkspaceEditParams,
+      ApplyWorkspaceEditResponse,
+      void,
+      void,
+    >,
+  };
+
+  // protocol.colorProvider
+  declare export interface ColorClientCapabilities {
+    textDocument?: {
+      colorProvider?: {
+        dynamicRegistration?: boolean,
+      },
+    };
+  }
+  declare export interface ColorProviderOptions {}
+  declare export interface ColorServerCapabilities {
+    colorProvider?:
+      | boolean
+      | ColorProviderOptions
+      | (ColorProviderOptions &
+          TextDocumentRegistrationOptions &
+          StaticRegistrationOptions);
+  }
+  declare export interface DocumentColorParams {
+    textDocument: ITextDocumentIdentifier;
+  }
+
+  declare export var DocumentColorRequest: {
+    type: RequestType<
+      DocumentColorParams,
+      IColorInformation[],
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  declare export interface ColorPresentationParams {
+    textDocument: ITextDocumentIdentifier;
+    color: IColor;
+    range: IRange;
+  }
+
+  declare export var ColorPresentationRequest: {
+    type: RequestType<
+      ColorPresentationParams,
+      IColorPresentation[],
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+  };
+
+  // protocol.implementation
+  declare export interface ImplementationClientCapabilities {
+    textDocument?: {
+      implementation?: {
+        dynamicRegistration?: boolean,
+        linkSupport?: boolean,
+      },
+    };
+  }
+  declare export interface ImplementationServerCapabilities {
+    implementationProvider?:
+      | boolean
+      | (TextDocumentRegistrationOptions & StaticRegistrationOptions);
+  }
+
+  declare export var ImplementationRequest: {
+    type: RequestType<
+      TextDocumentPositionParams,
+      ILocation | ILocation[] | ILocationLink[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+    HandlerSignature: RequestHandler<
+      TextDocumentPositionParams,
+      IDefinition | IDefinitionLink[] | null,
+      void,
+    >,
+  };
+
+  // protocol.declaration
+  declare export interface DeclarationClientCapabilities {
+    textDocument?: {
+      declaration?: {
+        dynamicRegistration?: boolean,
+        linkSupport?: boolean,
+      },
+    };
+  }
+  declare export interface DeclarationServerCapabilities {
+    declarationProvider?:
+      | boolean
+      | (TextDocumentRegistrationOptions & StaticRegistrationOptions);
+  }
+
+  declare export var DeclarationRequest: {
+    type: RequestType<
+      TextDocumentPositionParams,
+      ILocation | ILocation[] | ILocationLink[] | null,
+      void,
+      TextDocumentRegistrationOptions,
+    >,
+    HandlerSignature: RequestHandler<
+      TextDocumentPositionParams,
+      IDeclaration | IDeclarationLink[] | null,
+      void,
+    >,
+  };
+}
