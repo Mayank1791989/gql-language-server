@@ -1,4 +1,4 @@
-/* @flow */
+/* @flow strict */
 import { getLogger } from 'log4js';
 import { loadGQLService, type IGQLService } from './utils/gql';
 import { CompositeDisposable, Disposable } from './utils/Disposable';
@@ -12,6 +12,7 @@ import Hover from './providers/Hover';
 import {
   type IConnection,
   type TextDocumentSyncKindType,
+  type InitializeResult,
   BulkRegistration,
   DidOpenTextDocumentNotification,
   DidChangeTextDocumentNotification,
@@ -49,7 +50,7 @@ export default function createServer(
     disposable.dispose();
   });
 
-  connection.onInitialize(async (params) => {
+  connection.onInitialize(async (params): Promise<InitializeResult> => {
     logger.debug('onInitiialized called');
 
     const gqlService = await loadGQLService({
@@ -115,10 +116,10 @@ export default function createServer(
         definitionProvider: true,
         hoverProvider: true,
         referencesProvider: true,
-        completionProvider: {
+        completionProvider: Object.freeze({
           resolveProvider: false,
           triggerCharacters: ['.'],
-        },
+        }),
       },
       fileExtensions: gqlService.getConfig().getFileExtensions(),
     };

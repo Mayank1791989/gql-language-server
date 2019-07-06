@@ -1,4 +1,4 @@
-/* @flow */
+/* @flow strict */
 import log4js from 'log4js';
 import path from 'path';
 import { type IConnection } from 'vscode-languageserver';

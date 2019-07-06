@@ -11,7 +11,7 @@
     "access": "public"
   },
   "scripts": {
-    "test": "yarn lint",
+    "test": "yarn lint && yarn flow-check",
     "check-code": "yarn lint",
     "flow-check": "flow check",
     "lint": "eslint src",

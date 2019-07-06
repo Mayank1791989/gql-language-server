@@ -190,7 +190,7 @@ declare module 'vscode-jsonrpc' {
   /**
    * An interface to type messages.
    */
-  declare export interface MessageType {
+  declare export interface RPCMessageType {
     +method: string;
     +numberOfParams: number;
   }
@@ -609,10 +609,10 @@ declare module 'vscode-jsonrpc' {
     | ResponseError<E>
     | Thenable<R>
     | Thenable<ResponseError<E>>;
-  declare interface StarRequestHandler {
+  declare export interface StarRequestHandler {
     (method: string, ...params: any[]): HandlerResult<any, any>;
   }
-  declare interface GenericRequestHandler<R, E> {
+  declare export interface GenericRequestHandler<R, E> {
     (...params: any[]): HandlerResult<R, E>;
   }
   declare export type RequestHandler0<R, E> = {
@@ -702,13 +702,13 @@ declare module 'vscode-jsonrpc' {
       token: CancellationToken,
     ): HandlerResult<R, E>;
   }
-  declare interface StarNotificationHandler {
+  declare export interface StarNotificationHandler {
     (method: string, ...params: any[]): void;
   }
-  declare interface GenericNotificationHandler {
+  declare export interface GenericNotificationHandler {
     (...params: any[]): void;
   }
-  declare interface NotificationHandler0 {
+  declare export interface NotificationHandler0 {
     (): void;
   }
   declare export type NotificationHandler<P> = (params: P) => void;
@@ -799,7 +799,7 @@ declare module 'vscode-jsonrpc' {
     constructor(code: $Values<typeof ConnectionErrors>, message: string): void;
   }
   // declare type MessageQueue = LinkedMap<string, Message>;
-  declare type ConnectionStrategy = {
+  declare export type ConnectionStrategy = {
     cancelUndispatched?: (
       message: Message,
       next: (message: Message) => ResponseMessage | void,

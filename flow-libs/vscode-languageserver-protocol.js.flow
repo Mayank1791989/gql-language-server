@@ -7,6 +7,19 @@ declare module 'vscode-languageserver-protocol' {
     NotificationType0 as _NotificationType0,
     RequestHandler as _RequestHandler,
     RequestHandler0 as _RequestHandler0,
+    GenericRequestHandler as _GenericRequestHandler,
+    GenericNotificationHandler as _GenericNotificationHandler,
+    NotificationHandler as _NotificationHandler,
+    NotificationHandler0 as _NotificationHandler0,
+    StarNotificationHandler as _StarNotificationHandler,
+    StarRequestHandler as _StarRequestHandler,
+    ConnectionStrategy as _ConnectionStrategy,
+    CancellationToken as _CancellationToken,
+    RPCMessageType as _RPCMessageType,
+    MessageReader as _MessageReader,
+    MessageWriter as _MessageWriter,
+    Disposable as _Disposable,
+    Event as _Event,
   } from 'vscode-jsonrpc';
 
   declare export type NotificationType<P, RO> = _NotificationType<P, RO>;
@@ -15,6 +28,22 @@ declare module 'vscode-languageserver-protocol' {
   declare export type RequestType0<R, E, RO> = _RequestType0<R, E, RO>;
   declare export type RequestHandler<P, R, E> = _RequestHandler<P, R, E>;
   declare export type RequestHandler0<R, E> = _RequestHandler0<R, E>;
+  declare export type ConnectionStrategy = _ConnectionStrategy;
+  declare export type CancellationToken = _CancellationToken;
+  declare export type GenericNotificationHandler = _GenericNotificationHandler;
+  declare export type NotificationHandler<P> = _NotificationHandler<P>;
+  declare export type NotificationHandler0 = _NotificationHandler0;
+  declare export type StarNotificationHandler = _StarNotificationHandler;
+  declare export type StarRequestHandler = _StarRequestHandler;
+  declare export type RPCMessageType = _RPCMessageType;
+  declare export type MessageReader = _MessageReader;
+  declare export type MessageWriter = _MessageWriter;
+  declare export type Disposable = _Disposable;
+  declare export type Event<T> = _Event<T>;
+  declare export type GenericRequestHandler<R, E> = _GenericRequestHandler<
+    R,
+    E,
+  >;
 
   // import { ImplementationRequest, ImplementationClientCapabilities, ImplementationServerCapabilities } from './protocol.implementation';
   // import { TypeDefinitionRequest, TypeDefinitionClientCapabilities, TypeDefinitionServerCapabilities } from './protocol.typeDefinition';
@@ -317,14 +346,15 @@ declare module 'vscode-languageserver-protocol' {
     textDocument?: TextDocumentClientCapabilities;
     experimental?: any;
   }
+
   declare export type ClientCapabilities = _ClientCapabilities &
     ImplementationClientCapabilities &
-    TypeDefinitionClientCapabilities &
-    WorkspaceFoldersClientCapabilities &
-    ConfigurationClientCapabilities &
     ColorClientCapabilities &
-    FoldingRangeClientCapabilities &
     DeclarationClientCapabilities;
+  // TypeDefinitionClientCapabilities &
+  // WorkspaceFoldersClientCapabilities &
+  // ConfigurationClientCapabilities &
+  // FoldingRangeClientCapabilities &
 
   declare export var TextDocumentSyncKind: {
     None: 0,
@@ -342,8 +372,8 @@ declare module 'vscode-languageserver-protocol' {
   }
 
   declare export interface CompletionOptions {
-    triggerCharacters?: string[];
-    resolveProvider?: boolean;
+    +triggerCharacters?: string[];
+    +resolveProvider?: boolean;
   }
 
   declare export interface SignatureHelpOptions {
@@ -413,10 +443,10 @@ declare module 'vscode-languageserver-protocol' {
 
   declare export type ServerCapabilities = _ServerCapabilities &
     ImplementationServerCapabilities &
-    TypeDefinitionServerCapabilities &
-    WorkspaceFoldersServerCapabilities &
-    ColorServerCapabilities &
-    FoldingRangeServerCapabilities &
+    // TypeDefinitionServerCapabilities &
+    // WorkspaceFoldersServerCapabilities &
+    // ColorServerCapabilities &
+    // FoldingRangeServerCapabilities &
     DeclarationServerCapabilities;
 
   declare export var InitializeRequest: {
@@ -433,17 +463,17 @@ declare module 'vscode-languageserver-protocol' {
     rootPath?: string | null;
     rootUri: string | null;
     capabilities: ClientCapabilities;
-    initializationOptions?: any;
+    initializationOptions: mixed;
     trace?: 'off' | 'messages' | 'verbose';
   }
 
-  declare export type InitializeParams = _InitializeParams &
-    WorkspaceFoldersInitializeParams;
+  declare export type InitializeParams = _InitializeParams;
+  // WorkspaceFoldersInitializeParams;
 
-  declare export interface InitializeResult {
-    capabilities: ServerCapabilities;
-    [custom: string]: any;
-  }
+  declare export type InitializeResult = {
+    capabilities: ServerCapabilities,
+    [custom: string]: any,
+  };
 
   declare export var InitializeError: {
     unknownProtocolVersion: number,

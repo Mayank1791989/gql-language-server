@@ -1,5 +1,6 @@
 /* @flow */
 declare module 'vscode-languageserver' {
+  declare type Thenable<R> = Promise<R>;
   import type {
     ITextDocument as _ITextDocument,
     IPosition as _IPosition,
@@ -52,7 +53,7 @@ declare module 'vscode-languageserver' {
     DocumentColorParams,
     ColorPresentationParams,
     PublishDiagnosticsParams as _PublishDiagnosticsParams,
-    FoldingRangeParams,
+    // FoldingRangeParams,
     TextDocumentPositionParams as _TextDocumentPositionParams,
     RequestType,
     RequestType0,
@@ -74,7 +75,7 @@ declare module 'vscode-languageserver' {
     Event,
     ConnectionStrategy,
     InitializeParams,
-    InitializeResult,
+    InitializeResult as _InitializeResult,
     IInitializeError,
     InitializedParams,
     MessageActionItem,
@@ -126,6 +127,7 @@ declare module 'vscode-languageserver' {
   declare export type PublishDiagnosticsParams = _PublishDiagnosticsParams;
   declare export type DiagnosticSeverityType = _DiagnosticSeverityType;
   declare export type TextDocumentSyncKindType = _TextDocumentSyncKindType;
+  declare export type InitializeResult = _InitializeResult;
 
   declare export var TextDocumentSyncKind: _TextDocumentSyncKind;
   declare export var DidOpenTextDocumentNotification: _DidOpenTextDocumentNotification;
@@ -263,9 +265,9 @@ declare module 'vscode-languageserver' {
       paramOrEdit: ApplyWorkspaceEditParams | IWorkspaceEdit,
     ): Thenable<ApplyWorkspaceEditResponse>;
   }
-  declare export type RemoteWorkspace = _RemoteWorkspace &
-    Configuration &
-    WorkspaceFolders;
+  declare export type RemoteWorkspace = _RemoteWorkspace;
+  // & Configuration
+  // & WorkspaceFolders;
 
   declare export interface Telemetry extends Remote {
     logEvent(data: any): void;
@@ -517,13 +519,13 @@ declare module 'vscode-languageserver' {
         void,
       >,
     ): void,
-    onFoldingRanges(
-      handler: RequestHandler<
-        FoldingRangeParams,
-        IFoldingRange[] | void | null,
-        void,
-      >,
-    ): void,
+    // onFoldingRanges(
+    //   handler: RequestHandler<
+    //     FoldingRangeParams,
+    //     IFoldingRange[] | void | null,
+    //     void,
+    //   >,
+    // ): void,
     onExecuteCommand(
       handler: RequestHandler<ExecuteCommandParams, any | void | null, void>,
     ): void,

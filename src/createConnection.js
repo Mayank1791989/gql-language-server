@@ -1,4 +1,4 @@
-/* @flow */
+/* @flow strict */
 import {
   type IConnection,
   createConnection as lspCreateConnection,
@@ -37,12 +37,12 @@ export default function createConnection(
         })
         .listen(options.port);
 
-      return lspCreateConnection(reader, writer);
+      return lspCreateConnection((reader: $FixMe), (writer: $FixMe));
     }
     case 'stdio': {
       const reader = process.stdin;
       const writer = process.stdout;
-      return lspCreateConnection(reader, writer);
+      return lspCreateConnection((reader: $FixMe), (writer: $FixMe));
     }
     case 'node-ipc':
     default: {
