@@ -159,21 +159,24 @@ declare module 'vscode-languageserver-protocol' {
   declare export var Diagnostic: _Diagnostic;
   declare export var CompletionItemKind: _CompletionItemKind;
 
+  declare type RelativePattern = { base: string, pattern: string };
+  declare type GlobalPattern = string | RelativePattern;
+
   declare export type IDocumentFilter =
     | {
         language: string,
         scheme?: string,
-        pattern?: string,
+        pattern?: GlobalPattern,
       }
     | {
         language?: string,
         scheme: string,
-        pattern?: string,
+        pattern?: GlobalPattern,
       }
     | {
         language?: string,
         scheme?: string,
-        pattern: string,
+        pattern: GlobalPattern,
       };
   declare export class DocumentFilter {
     static is(value: any): boolean;

@@ -100,6 +100,11 @@ export default function createServer(
           gqlService,
           connection,
           syncKind: documents.syncKind,
+          clientSupportsRelativePattern:
+            typeof params.initializationOptions === 'object' &&
+            params.initializationOptions !== null
+              ? params.initializationOptions.relativePattern === true
+              : false,
         });
       });
       return {
@@ -179,15 +184,28 @@ function registerCapabilitiesDynamically(params: {
   gqlService: IGQLService,
   connection: IConnection,
   syncKind: TextDocumentSyncKindType,
+  clientSupportsRelativePattern: boolean,
 }) {
-  const extensions = params.gqlService.getConfig().getFileExtensions();
+  const gqlConfig = params.gqlService.getConfig();
+  const extensions = gqlConfig.getFileExtensions();
+  const pattern = `**/*.{${extensions.join(',')}}`;
   const documentOptions = {
     documentSelector: [
-      { scheme: 'file', pattern: `**/*.{${extensions.join(',')}}` },
+      {
+        scheme: 'file',
+        // NOTE: relative pattern is not mentioned in lsp spec
+        // but vscode supports it so enabling under a flag
+        pattern: params.clientSupportsRelativePattern
+          ? { base: gqlConfig.getDir(), pattern }
+          : pattern,
+      },
     ],
   };
 
-  logger.info('Dynamically registering capabilities for ', documentOptions);
+  logger.info(
+    'Dynamically registering capabilities for documents matching',
+    JSON.stringify(documentOptions.documentSelector, null, 2),
+  );
 
   const registration = BulkRegistration.create();
 

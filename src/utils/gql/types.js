@@ -2,6 +2,7 @@
 /* eslint-disable playlyfe/flow-object-type-delimiter */
 export interface IGQLConfig {
   getFileExtensions(): Array<string>;
+  getDir(): string;
 }
 export type GQLConfigFile = {
   version: string,
