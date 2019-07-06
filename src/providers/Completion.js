@@ -41,9 +41,25 @@ export default class Completion {
       items: items.map(({ text, type, description }) => ({
         label: text,
         detail: type || '',
-        kind: CompletionItemKind.Interface,
+        kind: typeToKind(type),
         documentation: description || '',
       })),
     };
+  }
+}
+
+function typeToKind(type) {
+  switch (type) {
+    case 'Scalar':
+    case 'Union':
+    case 'Input':
+    case 'Object':
+      return CompletionItemKind.Class;
+    case 'Interface':
+      return CompletionItemKind.Interface;
+    case 'Enum':
+      return CompletionItemKind.Enum;
+    default:
+      return CompletionItemKind.Field;
   }
 }
