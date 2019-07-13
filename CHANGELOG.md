@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/Mayank1791989/gql-language-server/compare/v0.2.0...v0.3.0) (2019-07-13)
+
+
+### Features
+
+* **log:** log node runtime info ([bd5258b](https://github.com/Mayank1791989/gql-language-server/commit/bd5258b))
+
+
+
 ## [0.2.0](https://github.com/Mayank1791989/gql-language-server/compare/v0.1.0...v0.2.0) (2019-07-06)
 
 
