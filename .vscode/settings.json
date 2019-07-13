@@ -16,11 +16,5 @@
   },
 
   "editor.formatOnSave": true,
-
-  "flow.useLSP": true,
-  "flow.enabled": true,
-  "flow.useNPMPackagedFlow": true,
-  "flow.showStatus": true,
-
   "javascript.validate.enable": false
 }
