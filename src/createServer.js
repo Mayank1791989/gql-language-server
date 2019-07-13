@@ -40,6 +40,8 @@ export default function createServer(
   connection: IConnection,
   options: ServerOptions,
 ) {
+  logger.info(`running in node ${process.version} (${process.execPath})`);
+
   const disposable = new CompositeDisposable();
   const documents = new TextDocuments(TextDocumentSyncKind.Incremental);
 
