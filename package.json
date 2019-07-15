@@ -1,6 +1,6 @@
 {
   "name": "@playlyfe/gql-language-server",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "language-server-protocol implementation for @playlyfe/gql",
   "main": "lib/index.js",
   "repository": {
