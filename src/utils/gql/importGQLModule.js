@@ -66,3 +66,12 @@ export default async function importGQLModule({
     throw err;
   }
 }
+
+export function exist(path: string): boolean {
+  try {
+    importFrom<GQLModule>(path, GQL_MODULE_NAME);
+    return true;
+  } catch {
+    return false;
+  }
+}

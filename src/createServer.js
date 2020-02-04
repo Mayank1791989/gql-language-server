@@ -1,6 +1,11 @@
 /* @flow strict */
 import { getLogger } from 'log4js';
-import { loadGQLService, type IGQLService } from './utils/gql';
+import {
+  loadGQLService,
+  type IGQLService,
+  existGQL,
+  parentNodeModulesPath,
+} from './utils/gql';
 import { CompositeDisposable, Disposable } from './utils/Disposable';
 
 import Completion from './providers/Completion';
@@ -57,7 +62,7 @@ export default function createServer(
 
     const gqlService = await loadGQLService({
       configDir: options.configDir || params.rootPath || process.cwd(),
-      gqlPath: options.gqlPath || params.rootPath || process.cwd(),
+      gqlPath: options.gqlPath || findGqlPath(params.rootPath) || process.cwd(),
       watchman: options.watchman,
       autoDownloadGQL: options.autoDownloadGQL,
       debug: options.loglevel === 'debug',
@@ -138,6 +143,16 @@ export default function createServer(
       connection.listen();
     },
   };
+}
+
+function findGqlPath(rootPath) {
+  // 1) loook into node_modules of workspace root
+  if (rootPath && existGQL(rootPath)) return rootPath;
+  // 2) look into node_modules of gql-language-server
+  const nodeModules = parentNodeModulesPath(__dirname);
+  if (nodeModules && existGQL(nodeModules)) return nodeModules;
+
+  return null;
 }
 
 function setupProviders(connection, gqlService, documents) {
