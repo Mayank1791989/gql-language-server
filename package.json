@@ -35,7 +35,7 @@
     "fs-extra": "8.1.0",
     "import-from": "3.0.0",
     "invariant": "2.2.4",
-    "json5": "2.1.0",
+    "json5": "2.2.2",
     "log4js": "3.0.2",
     "semver": "6.2.0",
     "vscode-jsonrpc": "4.0.0",
